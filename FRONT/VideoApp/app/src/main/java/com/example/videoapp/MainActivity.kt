@@ -1,6 +1,8 @@
 package com.example.videoapp
 
+import android.Manifest
 import android.content.ContentValues
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +11,10 @@ import android.util.Log
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.videoapp.databinding.ActivityMainBinding
 import com.example.videoapp.video_list.ItemNotify
@@ -38,6 +42,10 @@ class MainActivity : AppCompatActivity() {
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
             Log.d(ContentValues.TAG, "FirebaseMessaging: $it")
         }
+
+        // 알림을 얻기 위한 권한 물어보기
+        requestSinglePermission(Manifest.permission.POST_NOTIFICATIONS)
+
 
         // 파이어베이스 스토리지 연동 설정 =============================
         storage = Firebase.storage
@@ -86,5 +94,32 @@ class MainActivity : AppCompatActivity() {
         }
 
 //        registerForContextMenu(binding.recyclerView)
+    }
+
+    private fun requestSinglePermission(permission: String) {
+        if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED)
+            return
+
+        val requestPermLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it == false) { // permission is not granted!
+                AlertDialog.Builder(this).apply {
+                    setTitle("Warning")
+//                        setMessage(getString(R.string.no_permission, permission))
+                }.show()
+            }
+        }
+
+        if (shouldShowRequestPermissionRationale(permission)) {
+            // you should explain the reason why this app needs the permission.
+            AlertDialog.Builder(this).apply {
+                setTitle("Reason")
+//                    setMessage(getString(R.string.req_permission_reason, permission))
+                setPositiveButton("Allow") { _, _ -> requestPermLauncher.launch(permission) }
+                setNegativeButton("Deny") { _, _ -> }
+            }.show()
+        } else {
+            // should be called in onCreate()
+            requestPermLauncher.launch(permission)
+        }
     }
 }

@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.videoapp.R
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -31,8 +32,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // show the notification
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.d(TAG, "onMessageReceived: ddd")
-        showNotification()
+        Log.d(TAG, "onMessageReceived: ${remoteMessage.notification?.body}")
+        showNotification(remoteMessage.notification?.body ?: "메시지 전송 오류")
     }
 
     private val channelID = "default"
@@ -51,12 +52,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private var myNotificationID = 1
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun showNotification() {
+    private fun showNotification(message: String) {
         createNotificationChannel()
         val builder = NotificationCompat.Builder(this, channelID)
-//            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle("알림")
-            .setContentText("새 영상이 추가됬습니다.")
+            .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         if (ActivityCompat.checkSelfPermission(
