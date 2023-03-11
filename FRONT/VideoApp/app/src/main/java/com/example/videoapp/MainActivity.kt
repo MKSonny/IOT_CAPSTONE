@@ -8,7 +8,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.videoapp.databinding.ActivityMainBinding
-import com.example.videoapp.video_list.Item
 import com.example.videoapp.video_list.ItemNotify
 import com.example.videoapp.video_list.MyAdapter
 import com.example.videoapp.video_list.MyViewModel
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.floatingActionButton.setOnClickListener {
-            viewModel.addItem(Item("new", "data"))
+//            viewModel.addItem(Item("new", "data"))
         }
 
         val adapter = MyAdapter(viewModel)
