@@ -1,6 +1,8 @@
 package com.example.videoapp
 
+import android.Manifest
 import android.content.ContentValues
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -9,14 +11,17 @@ import android.util.Log
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.videoapp.databinding.ActivityMainBinding
 import com.example.videoapp.video_list.ItemNotify
 import com.example.videoapp.video_list.MyAdapter
 import com.example.videoapp.video_list.MyViewModel
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import java.time.LocalDateTime
@@ -31,7 +36,18 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 파이어베이스 스토리지 연동 설정
+        /**
+         * flask 와 연동위한 FirebaseMessaging token 얻기
+         */
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            Log.d(ContentValues.TAG, "FirebaseMessaging: $it")
+        }
+
+        // 알림을 얻기 위한 권한 물어보기
+        requestSinglePermission(Manifest.permission.POST_NOTIFICATIONS)
+
+
+        // 파이어베이스 스토리지 연동 설정 =============================
         storage = Firebase.storage
         val uploads = storage.getReference("uploads/")
 
@@ -54,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         }.addOnFailureListener {exception ->
             Log.d(ContentValues.TAG, "오류 발생 원인: $exception")
         }
+        //  ==========================================================
 
         // floatingActionButton 을 누를 경우 실시간 스트리밍 cctv를 볼 수 있도록 설정?
         binding.floatingActionButton.setOnClickListener {
@@ -77,5 +94,32 @@ class MainActivity : AppCompatActivity() {
         }
 
 //        registerForContextMenu(binding.recyclerView)
+    }
+
+    private fun requestSinglePermission(permission: String) {
+        if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED)
+            return
+
+        val requestPermLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it == false) { // permission is not granted!
+                AlertDialog.Builder(this).apply {
+                    setTitle("Warning")
+//                        setMessage(getString(R.string.no_permission, permission))
+                }.show()
+            }
+        }
+
+        if (shouldShowRequestPermissionRationale(permission)) {
+            // you should explain the reason why this app needs the permission.
+            AlertDialog.Builder(this).apply {
+                setTitle("Reason")
+//                    setMessage(getString(R.string.req_permission_reason, permission))
+                setPositiveButton("Allow") { _, _ -> requestPermLauncher.launch(permission) }
+                setNegativeButton("Deny") { _, _ -> }
+            }.show()
+        } else {
+            // should be called in onCreate()
+            requestPermLauncher.launch(permission)
+        }
     }
 }
