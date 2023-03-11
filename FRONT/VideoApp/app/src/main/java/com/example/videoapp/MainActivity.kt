@@ -17,6 +17,7 @@ import com.example.videoapp.video_list.ItemNotify
 import com.example.videoapp.video_list.MyAdapter
 import com.example.videoapp.video_list.MyViewModel
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import java.time.LocalDateTime
@@ -31,7 +32,14 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 파이어베이스 스토리지 연동 설정
+        /**
+         * flask 와 연동위한 FirebaseMessaging token 얻기
+         */
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            Log.d(ContentValues.TAG, "FirebaseMessaging: $it")
+        }
+
+        // 파이어베이스 스토리지 연동 설정 =============================
         storage = Firebase.storage
         val uploads = storage.getReference("uploads/")
 
@@ -54,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         }.addOnFailureListener {exception ->
             Log.d(ContentValues.TAG, "오류 발생 원인: $exception")
         }
+        //  ==========================================================
 
         // floatingActionButton 을 누를 경우 실시간 스트리밍 cctv를 볼 수 있도록 설정?
         binding.floatingActionButton.setOnClickListener {
