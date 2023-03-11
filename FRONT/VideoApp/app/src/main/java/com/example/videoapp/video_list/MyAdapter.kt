@@ -20,7 +20,7 @@ class MyAdapter(private val viewModel: MyViewModel) : RecyclerView.Adapter<MyAda
         fun setContents(pos : Int) {
             val item = viewModel.getItem(pos)
             val player = ExoPlayer.Builder(context).build()
-            player.setMediaItem(MediaItem.fromUri(item.videoUri))
+            player.setMediaItem(MediaItem.fromUri(item))
             binding.exoPlayer.player = player
         }
     }
