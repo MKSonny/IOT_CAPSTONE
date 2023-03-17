@@ -12,11 +12,13 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
 import android.widget.RemoteViews
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.videoapp.R
+import com.example.videoapp.video_list.MyViewModel
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage

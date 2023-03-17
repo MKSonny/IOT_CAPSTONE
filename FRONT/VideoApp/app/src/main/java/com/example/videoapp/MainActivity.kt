@@ -2,6 +2,7 @@ package com.example.videoapp
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -20,6 +21,9 @@ import com.example.videoapp.databinding.ActivityMainBinding
 import com.example.videoapp.video_list.ItemNotify
 import com.example.videoapp.video_list.MyAdapter
 import com.example.videoapp.video_list.MyViewModel
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
@@ -29,7 +33,6 @@ import java.time.LocalDateTime
 class MainActivity : AppCompatActivity() {
     private val viewModel: MyViewModel by viewModels()
     lateinit var storage: FirebaseStorage
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         // 알림을 얻기 위한 권한 물어보기
         requestSinglePermission(Manifest.permission.POST_NOTIFICATIONS)
 
-
         // 파이어베이스 스토리지 연동 설정 =============================
         storage = Firebase.storage
         val uploads = storage.getReference("uploads/")
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity() {
             for (item in listResult.items) {
                 item.downloadUrl.addOnCompleteListener { uri ->
                     unsortedVideos.add(uri.result)
+                    Log.d(TAG, "unsortedVideos.add(uri.result): ${uri.result}")
                     count++
                     if (count == totalItems) {
                         // All items have been added to the list
@@ -70,7 +73,46 @@ class MainActivity : AppCompatActivity() {
         }.addOnFailureListener {exception ->
             Log.d(ContentValues.TAG, "오류 발생 원인: $exception")
         }
+
         //  ==========================================================
+
+        // 새로운 영상 추가되면 리사이클러뷰에 알림
+        val db = Firebase.firestore
+        val postsCollectionRef = db.collection("refresh")
+        val batch = db.batch()
+        val snapshotListener = postsCollectionRef.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                println("Error getting posts: ${e.message}")
+                return@addSnapshotListener
+            }
+            if (snapshot != null) {
+                for (change in snapshot.documentChanges) {
+                    if (change.type == DocumentChange.Type.ADDED) {
+                        val addedStringVideoUri: String? = change.document["file_uri"] as? String
+                        val addedMetadata: String? = change.document["metadata"] as? String
+                        if (addedStringVideoUri != null) {
+//                            val replaced = addedStringVideoUri.replace("storage", "firebasestorage")
+                            Log.d(TAG, "addedStringVideoUri file_uri: $addedStringVideoUri")
+                            val metadataAddedUri =
+                                "$addedStringVideoUri?alt=media&token=$addedMetadata"
+                            val addedVideoUri = Uri.parse(metadataAddedUri)
+                            Log.d(TAG, "addedVideoUri: $addedVideoUri")
+
+                            viewModel.addItem(addedVideoUri)
+                            Log.d(TAG, "change.document.id: ${change.document.id}")
+                            postsCollectionRef.document(change.document.id).delete()
+
+//                            Log.d(TAG, "change.document.getDocumentReference(\"file_uri\") ${change.document.getDocumentReference()}")
+//                            change.document.getDocumentReference("file_uri")
+                        } else {
+                            // handle null value case
+                        }
+
+                    }
+                }
+            }
+        }
+        //
 
         // floatingActionButton 을 누를 경우 실시간 스트리밍 cctv를 볼 수 있도록 설정?
         binding.floatingActionButton.setOnClickListener {
