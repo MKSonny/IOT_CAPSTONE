@@ -1,12 +1,17 @@
 package com.example.videoapp.video_list
 
+import android.content.ContentValues
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.videoapp.databinding.ItemLayoutBinding
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 // 데이터를 넘겨주는 가장 좋은 방법은 MyAdapter 를 만들 때 데이터를 넘겨주는 것이다.
 // 여기서는 뷰모델을 사용한다.
@@ -17,11 +22,17 @@ class MyAdapter(private val viewModel: MyViewModel) : RecyclerView.Adapter<MyAda
      */
     inner class ViewHolder(private val binding : ItemLayoutBinding,
                            private val context: Context) : RecyclerView.ViewHolder(binding.root) {
+
+        private val db: FirebaseFirestore = Firebase.firestore
+        private val postsCollectionRef = db.collection("Post")
+
         fun setContents(pos : Int) {
             val item = viewModel.getItem(pos)
+
             val player = ExoPlayer.Builder(context).build()
             player.setMediaItem(MediaItem.fromUri(item))
             binding.exoPlayer.player = player
+
         }
     }
 

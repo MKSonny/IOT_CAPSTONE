@@ -1,7 +1,9 @@
 package com.example.videoapp.video_list
 
+import android.content.ContentValues.TAG
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -47,12 +49,17 @@ class MyViewModel : ViewModel() {
     val itemsSize get() = items.size
 
     fun addItem(videoUri: Uri) {
-        itemNotifiedType = ItemNotify.ADD
-        // items 의 사이즈가 새로 추가된 데이터의 위치가 된다.
-        itemNotified = itemsSize
-
-        items.add(0, videoUri)
-        itemsLiveData.value = items
+        if (!items.contains(videoUri)) {
+            Log.d(TAG, "addItem: added")
+            itemNotified = 0
+            for (item in items) {
+                Log.d(TAG, "addItem dafafsdfadf: $item")
+            }
+            Log.d(TAG, "dfadfadfadfadfafasdf: ${items.size}")
+            items.add(0, videoUri)
+            itemsLiveData.value = items
+            itemNotifiedType = ItemNotify.ADD
+        }
     }
 
     fun updateItem(videoUri: Uri, pos: Int) {
