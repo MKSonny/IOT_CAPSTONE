@@ -10,6 +10,7 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.videoapp.App
 import com.example.videoapp.R
@@ -115,7 +116,7 @@ internal class VideosFragment : Fragment(R.layout.recycler_layout) {
 //            viewModel.addItem(Item("new", "data"))
         }
 
-        val adapter = MyAdapter(viewModel)
+        val adapter = MyAdapter(findNavController(), viewModel)
         // 여기다가 우리가 만든 어댑터를 지정해준다.
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(App.instance)

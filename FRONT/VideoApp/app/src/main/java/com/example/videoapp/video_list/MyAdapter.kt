@@ -5,17 +5,22 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.videoapp.databinding.ItemLayoutBinding
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import androidx.navigation.fragment.findNavController
+import com.example.videoapp.R
 import com.google.firebase.ktx.Firebase
 
 // 데이터를 넘겨주는 가장 좋은 방법은 MyAdapter 를 만들 때 데이터를 넘겨주는 것이다.
 // 여기서는 뷰모델을 사용한다.
-class MyAdapter(private val viewModel: MyViewModel) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+class MyAdapter(private val navController: NavController, private val viewModel: MyViewModel) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
     /**
      * MyAdapter가 해줘야 되는 일은 이 ViewHolder 를 만들어주는 것과
      * ViewHolder에 데이터를 넣어주는 것, 현재 가지고 있는 아이템의 총 개수를 리턴해줘야 된다.
@@ -28,11 +33,9 @@ class MyAdapter(private val viewModel: MyViewModel) : RecyclerView.Adapter<MyAda
 
         fun setContents(pos : Int) {
             val item = viewModel.getItem(pos)
-
             val player = ExoPlayer.Builder(context).build()
             player.setMediaItem(MediaItem.fromUri(item))
             binding.exoPlayer.player = player
-
         }
     }
 
@@ -48,6 +51,10 @@ class MyAdapter(private val viewModel: MyViewModel) : RecyclerView.Adapter<MyAda
             // 현재 롱클릭 당한 아이템의 위치를 알 수 있다.
             viewModel.longClickItem = viewHolder.adapterPosition
             false
+        }
+
+        binding.askBtn.setOnClickListener {
+            navController.navigate(R.id.action_videosFragment_to_askFragment)
         }
 
         return viewHolder

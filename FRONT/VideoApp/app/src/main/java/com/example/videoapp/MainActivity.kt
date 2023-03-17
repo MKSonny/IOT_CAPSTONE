@@ -19,7 +19,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.videoapp.databinding.ActivityMainBinding
 import com.example.videoapp.video_list.ItemNotify
-import com.example.videoapp.video_list.MyAdapter
 import com.example.videoapp.video_list.MyViewModel
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
