@@ -93,9 +93,11 @@ class MainActivity : AppCompatActivity() {
                         if (addedStringVideoUri != null) {
 //                            val replaced = addedStringVideoUri.replace("storage", "firebasestorage")
                             Log.d(TAG, "addedStringVideoUri file_uri: $addedStringVideoUri")
+
                             val metadataAddedUri =
                                 "$addedStringVideoUri?alt=media&token=$addedMetadata"
-                            val addedVideoUri = Uri.parse(metadataAddedUri)
+
+                            val addedVideoUri = Uri.parse(addedStringVideoUri)
                             Log.d(TAG, "addedVideoUri: $addedVideoUri")
 
                             viewModel.addItem(addedVideoUri)

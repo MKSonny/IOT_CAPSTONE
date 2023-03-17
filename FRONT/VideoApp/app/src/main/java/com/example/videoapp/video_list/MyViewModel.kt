@@ -50,10 +50,15 @@ class MyViewModel : ViewModel() {
 
     fun addItem(videoUri: Uri) {
         if (!items.contains(videoUri)) {
-            itemNotifiedType = ItemNotify.ADD
+            Log.d(TAG, "addItem: added")
             itemNotified = 0
+            for (item in items) {
+                Log.d(TAG, "addItem dafafsdfadf: $item")
+            }
+            Log.d(TAG, "dfadfadfadfadfafasdf: ${items.size}")
             items.add(0, videoUri)
             itemsLiveData.value = items
+            itemNotifiedType = ItemNotify.ADD
         }
     }
 
