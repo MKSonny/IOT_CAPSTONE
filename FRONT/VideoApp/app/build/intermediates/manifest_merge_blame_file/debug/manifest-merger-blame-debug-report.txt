@@ -1,0 +1,312 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.videoapp"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+8-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:5:5-66
+11-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:5:22-64
+12    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+12-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:6:5-77
+12-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:6:22-74
+13
+14    <!--
+15 Set custom default icon. This is used when no icon is set for incoming notification messages.
+16    See README(https://goo.gl/l4GJaQ) for more.
+17    -->
+18    <meta-data
+18-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:12:5-14:62
+19        android:name="com.google.firebase.messaging.default_notification_icon"
+19-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:13:9-79
+20        android:resource="@drawable/ic_android_black_24dp" />
+20-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:14:9-59
+21    <!--
+22 Set color used with incoming notification messages. This is used when no color is set for the incoming
+23         notification message. See README(https://goo.gl/6BKBk7) for more.
+24    -->
+25    <meta-data
+25-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:19:5-21:48
+26        android:name="com.google.firebase.messaging.default_notification_color"
+26-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:20:9-80
+27        android:resource="@color/purple_700" />
+27-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:21:9-45
+28
+29    <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
+30    <!-- <uses-sdk android:minSdkVersion="14"/> -->
+31    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+31-->[com.google.firebase:firebase-storage:20.0.1] /Users/son/.gradle/caches/transforms-3/86245c0e159f0c4122a3f912d0f221ae/transformed/firebase-storage-20.0.1/AndroidManifest.xml:26:5-79
+31-->[com.google.firebase:firebase-storage:20.0.1] /Users/son/.gradle/caches/transforms-3/86245c0e159f0c4122a3f912d0f221ae/transformed/firebase-storage-20.0.1/AndroidManifest.xml:26:22-76
+32    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+32-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:26:5-68
+32-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:26:22-65
+33    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+33-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:28:5-82
+33-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:28:22-79
+34
+35    <permission
+35-->[androidx.core:core:1.9.0] /Users/son/.gradle/caches/transforms-3/256359c9505432507558def56c015fe7/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+36        android:name="com.example.videoapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+36-->[androidx.core:core:1.9.0] /Users/son/.gradle/caches/transforms-3/256359c9505432507558def56c015fe7/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+37        android:protectionLevel="signature" />
+37-->[androidx.core:core:1.9.0] /Users/son/.gradle/caches/transforms-3/256359c9505432507558def56c015fe7/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+38
+39    <uses-permission android:name="com.example.videoapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+39-->[androidx.core:core:1.9.0] /Users/son/.gradle/caches/transforms-3/256359c9505432507558def56c015fe7/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+39-->[androidx.core:core:1.9.0] /Users/son/.gradle/caches/transforms-3/256359c9505432507558def56c015fe7/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+40
+41    <application
+41-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:23:5-49:19
+42        android:name="com.example.videoapp.App"
+42-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:24:9-28
+43        android:allowBackup="true"
+43-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:25:9-35
+44        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+44-->[androidx.core:core:1.9.0] /Users/son/.gradle/caches/transforms-3/256359c9505432507558def56c015fe7/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+45        android:dataExtractionRules="@xml/data_extraction_rules"
+45-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:26:9-65
+46        android:debuggable="true"
+47        android:extractNativeLibs="false"
+48        android:fullBackupContent="@xml/backup_rules"
+48-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:27:9-54
+49        android:icon="@mipmap/ic_launcher"
+49-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:28:9-43
+50        android:label="@string/app_name"
+50-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:29:9-41
+51        android:supportsRtl="true"
+51-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:30:9-35
+52        android:testOnly="true"
+53        android:theme="@style/Theme.VideoApp" >
+53-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:31:9-46
+54        <activity
+54-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:33:9-41:20
+55            android:name="com.example.videoapp.MainActivity"
+55-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:34:13-41
+56            android:exported="true" >
+56-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:35:13-36
+57            <intent-filter>
+57-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:36:13-40:29
+58                <action android:name="android.intent.action.MAIN" />
+58-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:37:17-69
+58-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:37:25-66
+59
+60                <category android:name="android.intent.category.LAUNCHER" />
+60-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:39:17-77
+60-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:39:27-74
+61            </intent-filter>
+62        </activity>
+63
+64        <service
+64-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:42:9-48:19
+65            android:name="com.example.videoapp.cloud_message.MyFirebaseMessagingService"
+65-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:43:13-69
+66            android:exported="false" >
+66-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:44:13-37
+67            <intent-filter>
+67-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:45:13-47:29
+68                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+68-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:46:17-78
+68-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:46:25-75
+69            </intent-filter>
+70        </service>
+71        <service
+71-->[com.google.firebase:firebase-storage-ktx:20.0.1] /Users/son/.gradle/caches/transforms-3/32699f32ce7d0710b86409ed3a7c6ea7/transformed/firebase-storage-ktx-20.0.1/AndroidManifest.xml:12:9-18:19
+72            android:name="com.google.firebase.components.ComponentDiscoveryService"
+72-->[com.google.firebase:firebase-storage-ktx:20.0.1] /Users/son/.gradle/caches/transforms-3/32699f32ce7d0710b86409ed3a7c6ea7/transformed/firebase-storage-ktx-20.0.1/AndroidManifest.xml:13:13-84
+73            android:directBootAware="true"
+73-->[com.google.firebase:firebase-common:20.3.1] /Users/son/.gradle/caches/transforms-3/ee5ff7427a371ac2f47b4b2619abba72/transformed/firebase-common-20.3.1/AndroidManifest.xml:34:13-43
+74            android:exported="false" >
+74-->[com.google.firebase:firebase-storage-ktx:20.0.1] /Users/son/.gradle/caches/transforms-3/32699f32ce7d0710b86409ed3a7c6ea7/transformed/firebase-storage-ktx-20.0.1/AndroidManifest.xml:14:13-37
+75            <meta-data
+75-->[com.google.firebase:firebase-storage-ktx:20.0.1] /Users/son/.gradle/caches/transforms-3/32699f32ce7d0710b86409ed3a7c6ea7/transformed/firebase-storage-ktx-20.0.1/AndroidManifest.xml:15:13-17:85
+76                android:name="com.google.firebase.components:com.google.firebase.storage.ktx.FirebaseStorageKtxRegistrar"
+76-->[com.google.firebase:firebase-storage-ktx:20.0.1] /Users/son/.gradle/caches/transforms-3/32699f32ce7d0710b86409ed3a7c6ea7/transformed/firebase-storage-ktx-20.0.1/AndroidManifest.xml:16:17-122
+77                android:value="com.google.firebase.components.ComponentRegistrar" />
+77-->[com.google.firebase:firebase-storage-ktx:20.0.1] /Users/son/.gradle/caches/transforms-3/32699f32ce7d0710b86409ed3a7c6ea7/transformed/firebase-storage-ktx-20.0.1/AndroidManifest.xml:17:17-82
+78            <meta-data
+78-->[com.google.firebase:firebase-messaging-ktx:23.1.2] /Users/son/.gradle/caches/transforms-3/43923b52e1eecb69fa1a90659fd99585/transformed/firebase-messaging-ktx-23.1.2/AndroidManifest.xml:28:13-30:85
+79                android:name="com.google.firebase.components:com.google.firebase.messaging.ktx.FirebaseMessagingKtxRegistrar"
+79-->[com.google.firebase:firebase-messaging-ktx:23.1.2] /Users/son/.gradle/caches/transforms-3/43923b52e1eecb69fa1a90659fd99585/transformed/firebase-messaging-ktx-23.1.2/AndroidManifest.xml:29:17-126
+80                android:value="com.google.firebase.components.ComponentRegistrar" />
+80-->[com.google.firebase:firebase-messaging-ktx:23.1.2] /Users/son/.gradle/caches/transforms-3/43923b52e1eecb69fa1a90659fd99585/transformed/firebase-messaging-ktx-23.1.2/AndroidManifest.xml:30:17-82
+81            <meta-data
+81-->[com.google.firebase:firebase-firestore-ktx:24.4.4] /Users/son/.gradle/caches/transforms-3/cba61ddf6322409668107e6f6f657230/transformed/firebase-firestore-ktx-24.4.4/AndroidManifest.xml:14:13-16:85
+82                android:name="com.google.firebase.components:com.google.firebase.firestore.ktx.FirebaseFirestoreKtxRegistrar"
+82-->[com.google.firebase:firebase-firestore-ktx:24.4.4] /Users/son/.gradle/caches/transforms-3/cba61ddf6322409668107e6f6f657230/transformed/firebase-firestore-ktx-24.4.4/AndroidManifest.xml:15:17-126
+83                android:value="com.google.firebase.components.ComponentRegistrar" />
+83-->[com.google.firebase:firebase-firestore-ktx:24.4.4] /Users/son/.gradle/caches/transforms-3/cba61ddf6322409668107e6f6f657230/transformed/firebase-firestore-ktx-24.4.4/AndroidManifest.xml:16:17-82
+84            <meta-data
+84-->[com.google.firebase:firebase-common-ktx:20.3.1] /Users/son/.gradle/caches/transforms-3/4ef4599f7adb831c8ad8245dcec9412b/transformed/firebase-common-ktx-20.3.1/AndroidManifest.xml:14:13-16:85
+85                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonKtxRegistrar"
+85-->[com.google.firebase:firebase-common-ktx:20.3.1] /Users/son/.gradle/caches/transforms-3/4ef4599f7adb831c8ad8245dcec9412b/transformed/firebase-common-ktx-20.3.1/AndroidManifest.xml:15:17-113
+86                android:value="com.google.firebase.components.ComponentRegistrar" />
+86-->[com.google.firebase:firebase-common-ktx:20.3.1] /Users/son/.gradle/caches/transforms-3/4ef4599f7adb831c8ad8245dcec9412b/transformed/firebase-common-ktx-20.3.1/AndroidManifest.xml:16:17-82
+87            <meta-data
+87-->[com.google.firebase:firebase-storage:20.0.1] /Users/son/.gradle/caches/transforms-3/86245c0e159f0c4122a3f912d0f221ae/transformed/firebase-storage-20.0.1/AndroidManifest.xml:33:13-35:85
+88                android:name="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar"
+88-->[com.google.firebase:firebase-storage:20.0.1] /Users/son/.gradle/caches/transforms-3/86245c0e159f0c4122a3f912d0f221ae/transformed/firebase-storage-20.0.1/AndroidManifest.xml:34:17-107
+89                android:value="com.google.firebase.components.ComponentRegistrar" />
+89-->[com.google.firebase:firebase-storage:20.0.1] /Users/son/.gradle/caches/transforms-3/86245c0e159f0c4122a3f912d0f221ae/transformed/firebase-storage-20.0.1/AndroidManifest.xml:35:17-82
+90            <meta-data
+90-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:55:13-57:85
+91                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+91-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:56:17-119
+92                android:value="com.google.firebase.components.ComponentRegistrar" />
+92-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:57:17-82
+93            <meta-data
+93-->[com.google.firebase:firebase-firestore:24.4.4] /Users/son/.gradle/caches/transforms-3/0e2aa502450d84915c247dd5b2302feb/transformed/firebase-firestore-24.4.4/AndroidManifest.xml:19:13-21:85
+94                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+94-->[com.google.firebase:firebase-firestore:24.4.4] /Users/son/.gradle/caches/transforms-3/0e2aa502450d84915c247dd5b2302feb/transformed/firebase-firestore-24.4.4/AndroidManifest.xml:20:17-111
+95                android:value="com.google.firebase.components.ComponentRegistrar" />
+95-->[com.google.firebase:firebase-firestore:24.4.4] /Users/son/.gradle/caches/transforms-3/0e2aa502450d84915c247dd5b2302feb/transformed/firebase-firestore-24.4.4/AndroidManifest.xml:21:17-82
+96            <meta-data
+96-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/son/.gradle/caches/transforms-3/0389c98650450a2a9b5511607b97994c/transformed/firebase-datatransport-18.1.7/AndroidManifest.xml:27:13-29:85
+97                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+97-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/son/.gradle/caches/transforms-3/0389c98650450a2a9b5511607b97994c/transformed/firebase-datatransport-18.1.7/AndroidManifest.xml:28:17-115
+98                android:value="com.google.firebase.components.ComponentRegistrar" />
+98-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/son/.gradle/caches/transforms-3/0389c98650450a2a9b5511607b97994c/transformed/firebase-datatransport-18.1.7/AndroidManifest.xml:29:17-82
+99            <meta-data
+99-->[com.google.firebase:firebase-installations:17.1.3] /Users/son/.gradle/caches/transforms-3/0d15384ab187440a8f074f0f49604b7d/transformed/firebase-installations-17.1.3/AndroidManifest.xml:17:13-19:85
+100                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+100-->[com.google.firebase:firebase-installations:17.1.3] /Users/son/.gradle/caches/transforms-3/0d15384ab187440a8f074f0f49604b7d/transformed/firebase-installations-17.1.3/AndroidManifest.xml:18:17-127
+101                android:value="com.google.firebase.components.ComponentRegistrar" />
+101-->[com.google.firebase:firebase-installations:17.1.3] /Users/son/.gradle/caches/transforms-3/0d15384ab187440a8f074f0f49604b7d/transformed/firebase-installations-17.1.3/AndroidManifest.xml:19:17-82
+102        </service>
+103
+104        <receiver
+104-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:31:9-38:20
+105            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+105-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:32:13-78
+106            android:exported="true"
+106-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:33:13-36
+107            android:permission="com.google.android.c2dm.permission.SEND" >
+107-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:34:13-73
+108            <intent-filter>
+108-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:35:13-37:29
+109                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+109-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:36:17-81
+109-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:36:25-78
+110            </intent-filter>
+111        </receiver>
+112        <!--
+113             FirebaseMessagingService performs security checks at runtime,
+114             but set to not exported to explicitly avoid allowing another app to call it.
+115        -->
+116        <service
+116-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:44:9-51:19
+117            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+117-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:45:13-82
+118            android:directBootAware="true"
+118-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:46:13-43
+119            android:exported="false" >
+119-->[com.google.firebase:firebase-messaging:23.1.2] /Users/son/.gradle/caches/transforms-3/9440535d6d7243355569e1bdee3f0b94/transformed/firebase-messaging-23.1.2/AndroidManifest.xml:47:13-37
+120            <intent-filter android:priority="-500" >
+120-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:45:13-47:29
+121                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+121-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:46:17-78
+121-->/Users/son/Desktop/IoT_Capstone/FRONT/VideoApp/app/src/main/AndroidManifest.xml:46:25-75
+122            </intent-filter>
+123        </service>
+124
+125        <provider
+125-->[com.google.firebase:firebase-common:20.3.1] /Users/son/.gradle/caches/transforms-3/ee5ff7427a371ac2f47b4b2619abba72/transformed/firebase-common-20.3.1/AndroidManifest.xml:25:9-30:39
+126            android:name="com.google.firebase.provider.FirebaseInitProvider"
+126-->[com.google.firebase:firebase-common:20.3.1] /Users/son/.gradle/caches/transforms-3/ee5ff7427a371ac2f47b4b2619abba72/transformed/firebase-common-20.3.1/AndroidManifest.xml:26:13-77
+127            android:authorities="com.example.videoapp.firebaseinitprovider"
+127-->[com.google.firebase:firebase-common:20.3.1] /Users/son/.gradle/caches/transforms-3/ee5ff7427a371ac2f47b4b2619abba72/transformed/firebase-common-20.3.1/AndroidManifest.xml:27:13-72
+128            android:directBootAware="true"
+128-->[com.google.firebase:firebase-common:20.3.1] /Users/son/.gradle/caches/transforms-3/ee5ff7427a371ac2f47b4b2619abba72/transformed/firebase-common-20.3.1/AndroidManifest.xml:28:13-43
+129            android:exported="false"
+129-->[com.google.firebase:firebase-common:20.3.1] /Users/son/.gradle/caches/transforms-3/ee5ff7427a371ac2f47b4b2619abba72/transformed/firebase-common-20.3.1/AndroidManifest.xml:29:13-37
+130            android:initOrder="100" />
+130-->[com.google.firebase:firebase-common:20.3.1] /Users/son/.gradle/caches/transforms-3/ee5ff7427a371ac2f47b4b2619abba72/transformed/firebase-common-20.3.1/AndroidManifest.xml:30:13-36
+131
+132        <activity
+132-->[com.google.android.gms:play-services-base:18.0.1] /Users/son/.gradle/caches/transforms-3/9a78a74798a6e90d809685a21a88d902/transformed/play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+133            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+133-->[com.google.android.gms:play-services-base:18.0.1] /Users/son/.gradle/caches/transforms-3/9a78a74798a6e90d809685a21a88d902/transformed/play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+134            android:exported="false"
+134-->[com.google.android.gms:play-services-base:18.0.1] /Users/son/.gradle/caches/transforms-3/9a78a74798a6e90d809685a21a88d902/transformed/play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+135            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+135-->[com.google.android.gms:play-services-base:18.0.1] /Users/son/.gradle/caches/transforms-3/9a78a74798a6e90d809685a21a88d902/transformed/play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+136
+137        <meta-data
+137-->[com.google.android.gms:play-services-basement:18.1.0] /Users/son/.gradle/caches/transforms-3/69f848028a1b2ac635b4356c25daa9f8/transformed/play-services-basement-18.1.0/AndroidManifest.xml:21:9-23:69
+138            android:name="com.google.android.gms.version"
+138-->[com.google.android.gms:play-services-basement:18.1.0] /Users/son/.gradle/caches/transforms-3/69f848028a1b2ac635b4356c25daa9f8/transformed/play-services-basement-18.1.0/AndroidManifest.xml:22:13-58
+139            android:value="@integer/google_play_services_version" />
+139-->[com.google.android.gms:play-services-basement:18.1.0] /Users/son/.gradle/caches/transforms-3/69f848028a1b2ac635b4356c25daa9f8/transformed/play-services-basement-18.1.0/AndroidManifest.xml:23:13-66
+140
+141        <uses-library
+141-->[androidx.window:window:1.0.0] /Users/son/.gradle/caches/transforms-3/61503bda008b69554a58ce711449c738/transformed/window-1.0.0/AndroidManifest.xml:25:9-27:40
+142            android:name="androidx.window.extensions"
+142-->[androidx.window:window:1.0.0] /Users/son/.gradle/caches/transforms-3/61503bda008b69554a58ce711449c738/transformed/window-1.0.0/AndroidManifest.xml:26:13-54
+143            android:required="false" />
+143-->[androidx.window:window:1.0.0] /Users/son/.gradle/caches/transforms-3/61503bda008b69554a58ce711449c738/transformed/window-1.0.0/AndroidManifest.xml:27:13-37
+144        <uses-library
+144-->[androidx.window:window:1.0.0] /Users/son/.gradle/caches/transforms-3/61503bda008b69554a58ce711449c738/transformed/window-1.0.0/AndroidManifest.xml:28:9-30:40
+145            android:name="androidx.window.sidecar"
+145-->[androidx.window:window:1.0.0] /Users/son/.gradle/caches/transforms-3/61503bda008b69554a58ce711449c738/transformed/window-1.0.0/AndroidManifest.xml:29:13-51
+146            android:required="false" />
+146-->[androidx.window:window:1.0.0] /Users/son/.gradle/caches/transforms-3/61503bda008b69554a58ce711449c738/transformed/window-1.0.0/AndroidManifest.xml:30:13-37
+147
+148        <provider
+148-->[androidx.emoji2:emoji2:1.2.0] /Users/son/.gradle/caches/transforms-3/0a6e725b5cd926d88f40799b5736ce68/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+149            android:name="androidx.startup.InitializationProvider"
+149-->[androidx.emoji2:emoji2:1.2.0] /Users/son/.gradle/caches/transforms-3/0a6e725b5cd926d88f40799b5736ce68/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
+150            android:authorities="com.example.videoapp.androidx-startup"
+150-->[androidx.emoji2:emoji2:1.2.0] /Users/son/.gradle/caches/transforms-3/0a6e725b5cd926d88f40799b5736ce68/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
+151            android:exported="false" >
+151-->[androidx.emoji2:emoji2:1.2.0] /Users/son/.gradle/caches/transforms-3/0a6e725b5cd926d88f40799b5736ce68/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
+152            <meta-data
+152-->[androidx.emoji2:emoji2:1.2.0] /Users/son/.gradle/caches/transforms-3/0a6e725b5cd926d88f40799b5736ce68/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+153                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+153-->[androidx.emoji2:emoji2:1.2.0] /Users/son/.gradle/caches/transforms-3/0a6e725b5cd926d88f40799b5736ce68/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+154                android:value="androidx.startup" />
+154-->[androidx.emoji2:emoji2:1.2.0] /Users/son/.gradle/caches/transforms-3/0a6e725b5cd926d88f40799b5736ce68/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+155            <meta-data
+155-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/son/.gradle/caches/transforms-3/407c16198eec237eb9682be027f89614/transformed/lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+156                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+156-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/son/.gradle/caches/transforms-3/407c16198eec237eb9682be027f89614/transformed/lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+157                android:value="androidx.startup" />
+157-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/son/.gradle/caches/transforms-3/407c16198eec237eb9682be027f89614/transformed/lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+158        </provider>
+159
+160        <service
+160-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/son/.gradle/caches/transforms-3/f0dac6f6f3be25733f75ab60874ea323/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:28:9-34:19
+161            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+161-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/son/.gradle/caches/transforms-3/f0dac6f6f3be25733f75ab60874ea323/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:29:13-103
+162            android:exported="false" >
+162-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/son/.gradle/caches/transforms-3/f0dac6f6f3be25733f75ab60874ea323/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:30:13-37
+163            <meta-data
+163-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/son/.gradle/caches/transforms-3/f0dac6f6f3be25733f75ab60874ea323/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:31:13-33:39
+164                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+164-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/son/.gradle/caches/transforms-3/f0dac6f6f3be25733f75ab60874ea323/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:32:17-94
+165                android:value="cct" />
+165-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/son/.gradle/caches/transforms-3/f0dac6f6f3be25733f75ab60874ea323/transformed/transport-backend-cct-3.1.8/AndroidManifest.xml:33:17-36
+166        </service>
+167        <service
+167-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/son/.gradle/caches/transforms-3/45682a8edf08abaf1da278422704c57f/transformed/transport-runtime-3.1.8/AndroidManifest.xml:26:9-30:19
+168            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+168-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/son/.gradle/caches/transforms-3/45682a8edf08abaf1da278422704c57f/transformed/transport-runtime-3.1.8/AndroidManifest.xml:27:13-117
+169            android:exported="false"
+169-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/son/.gradle/caches/transforms-3/45682a8edf08abaf1da278422704c57f/transformed/transport-runtime-3.1.8/AndroidManifest.xml:28:13-37
+170            android:permission="android.permission.BIND_JOB_SERVICE" >
+170-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/son/.gradle/caches/transforms-3/45682a8edf08abaf1da278422704c57f/transformed/transport-runtime-3.1.8/AndroidManifest.xml:29:13-69
+171        </service>
+172
+173        <receiver
+173-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/son/.gradle/caches/transforms-3/45682a8edf08abaf1da278422704c57f/transformed/transport-runtime-3.1.8/AndroidManifest.xml:32:9-34:40
+174            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+174-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/son/.gradle/caches/transforms-3/45682a8edf08abaf1da278422704c57f/transformed/transport-runtime-3.1.8/AndroidManifest.xml:33:13-132
+175            android:exported="false" />
+175-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/son/.gradle/caches/transforms-3/45682a8edf08abaf1da278422704c57f/transformed/transport-runtime-3.1.8/AndroidManifest.xml:34:13-37
+176    </application>
+177
+178</manifest>
