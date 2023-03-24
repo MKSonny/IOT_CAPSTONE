@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:front_flutter/page/home.dart';
@@ -17,7 +20,22 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  Map<String, String> data;
+
+  if (Platform.isAndroid) {
+    data = {'who': 'android'};
+  } else if (Platform.isIOS) {
+    data = {'who': 'ios'};
+  } else {
+    data = {'who': 'error'};
+  }
+
+  final database = FirebaseFirestore.instance.collection('version').doc('KS9DVXtJaKszqMcRK5eO').set(
+    data
+  );
+
   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  messaging.getToken().then((value) => print('FirebaseMessaging token is $value'));
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
     announcement: false,
