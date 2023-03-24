@@ -38,6 +38,16 @@ dependencies:
   flutter_svg: ^2.0.4
   intl: ^0.18.0
   firebase_core: ^2.8.0
+  firebase_storage: ^11.0.16
+  path_provider: ^2.0.14
+  gallery_saver: ^2.3.2
+  dio: ^5.0.3
+  firebase_messaging: ^14.3.0
+  video_player: ^2.6.0
+  chewie: ^1.4.0
+  cloud_firestore: ^4.4.5
+  permission_handler: ^10.2.0
+  external_path: ^1.0.3
 
 dev_dependencies:
   flutter_test:
