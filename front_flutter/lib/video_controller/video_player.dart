@@ -2,8 +2,14 @@
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
+import 'package:dio/dio.dart';
+import 'package:external_path/external_path.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerView extends StatefulWidget {
@@ -79,11 +85,17 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
       children: [
         const SizedBox(height: 10,),
         const Divider(),
-        Text(
-          // widget.dataSourceType.name.toUpperCase(),
-          // widget.url,
-          formattedDateTime,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        // Text(
+        //   // widget.dataSourceType.name.toUpperCase(),
+        //   // widget.url,
+        //   formattedDateTime,
+        //   style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        // ),
+        ListTile(
+          title: Text(formattedDateTime),
+          trailing: IconButton(
+            icon: const Icon(Icons.download, color: Colors.black,), 
+            onPressed: () => downloadFile(widget.url, formattedDateTime),),
         ),
         const SizedBox(height: 10,),
         const Divider(),
@@ -94,5 +106,32 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
       ],
     );
   }
-}
 
+  Future downloadFile(String downloadURL, String formattedDateTime) async {
+      final url = downloadURL;
+
+      final tempDir = await getTemporaryDirectory();
+      final path = '${tempDir.path}/$formattedDateTime.mp4';
+      await Dio().download(
+        url, 
+        path,
+        onReceiveProgress: (received, total) {
+          double progress = received / total;
+
+          // setState(() {
+          //   downloadProgress[index] = progress;
+          // });
+        } ,
+        );
+
+      if (url.contains('.mp4')) {
+        await GallerySaver.saveVideo(path, toDcim: true);
+      } else if (url.contains('.png')){
+        await GallerySaver.saveImage(path, toDcim: true);
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Downloaded $formattedDateTime')),
+      );
+    }
+}
