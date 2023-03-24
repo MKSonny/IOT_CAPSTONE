@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:front_flutter/page/home.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:front_flutter/page/main_page.dart';
 import 'firebase_options.dart';
 
 
@@ -58,7 +59,7 @@ Future<void> main() async {
   }); 
 
   runApp(const MaterialApp(
-    home: HomePage(),
+    home: MainPage(),
     // debugShowCheckedModeBanner: false,
   ));
 }
