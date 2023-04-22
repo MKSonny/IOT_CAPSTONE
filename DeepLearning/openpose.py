@@ -6,6 +6,7 @@ import argparse
 from pathlib import Path
 import json
 import csv
+import os
 
 #body_25 Output Format
 nPoints = 25
@@ -44,102 +45,114 @@ net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
 net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 print("Using GPU device")
 
+#path 내 동영상 한 번에 열어서 학습시키기
+path = 'C:/Users/ICT/Desktop/youda/ViolenceData/Violence'
+video_paths = list(os.listdir(path))
+
+
+num_path = 0
 #동영상 연결
-capture = cv2.VideoCapture('C:/Users/ICT/Desktop/youda/ViolenceData/Violence/1.mp4')
+for file in video_paths:
+    print("num_path: ",num_path)
+    capture = cv2.VideoCapture(os.path.join(path,file))
 
-#파라미터값 설정
-inputWidth = 320
-inputHeight = 240
-inputScale = 1.0 / 255
-w = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
-h = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
-fps = 24
-fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-out = cv2.VideoWriter('./output_inv.avi', fourcc, fps, (w, h))
+    #파라미터값 설정
+    inputWidth = 320
+    inputHeight = 240
+    inputScale = 1.0 / 255
+    w = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+    h = int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = 24
+    fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+    # out = cv2.VideoWriter('./output_inv.avi', fourcc, fps, (w, h))
+    total_keypoints = []
+    #while문 통해 동엿상 열기
+    while True: #어떤 키든 입력할 경우 중지
+        #웹캠으로부터 영상 가져오기
+        hasframe , frame = capture.read()
 
-#while문 통해 동엿상 열기
-while cv2.waitKey(1)<0: #어떤 키든 입력할 경우 중지
-    #웹캠으로부터 영상 가져오기
-    hasframe , frame = capture.read()
+        #웹캠에서 영상 가져올 수 없다면 웹캠 중지하기
+        if not hasframe:
+            break
 
-    #웹캠에서 영상 가져올 수 없다면 웹캠 중지하기
-    if not hasframe:
-        cv2.waitKey()
-        break
+        t = time.time()
+        frameWidth = frame.shape[1]
+        frameHeight = frame.shape[0]
 
-    t = time.time()
-    frameWidth = frame.shape[1]
-    frameHeight = frame.shape[0]
+        inpBlob = cv2.dnn.blobFromImage(frame, inputScale, (inputWidth, inputHeight),(0, 0, 0), swapRB=False, crop=False)
+        # imgb = cv2.dnn.imagesFromBlob(inpBlob)
 
-    inpBlob = cv2.dnn.blobFromImage(frame, inputScale, (inputWidth, inputHeight),(0, 0, 0), swapRB=False, crop=False)
-    # imgb = cv2.dnn.imagesFromBlob(inpBlob)
-
-    net.setInput(inpBlob)
-    
-    # 결과 받아오기
-    output = net.forward()
-    print("Time Taken in forward pass = {}".format(time.time() - t))
-    fps = capture.get(cv2.CAP_PROP_FPS)
-    print("fps: ",fps)
-
-    detect_keypoints = []
-    keypoints_list = np.zeros((0,3))
-    keypoint_id = 0
-    threshold = 0.1
-
-    for part in range(nPoints):
-        probMap = output[0, part, :, :]
-        probMap = cv2.resize(probMap, (frameWidth, frameHeight))
+        net.setInput(inpBlob)
         
-        #특징점 추출(Keypoints)-> 원래 함수에 있던 애
-        mapSmooth = cv2.GaussianBlur(probMap, (3,3), 0, 0)
-        mapMask = np.uint8(mapSmooth>threshold)
-        keypoints = []
-        contours, _ = cv2.findContours(mapMask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        # 결과 받아오기
+        output = net.forward()
+        print("Time Taken in forward pass = {}".format(time.time() - t))
+        fps = capture.get(cv2.CAP_PROP_FPS)
+        print("fps: ",fps)
 
-        #각 blobs의 max, min값 찾기
-        for cnt in contours:
-            blobMask = np.zeros(mapMask.shape)
-            blobMask = cv2.fillConvexPoly(blobMask, cnt, 1)
-            maskedProbMap = mapSmooth * blobMask
-            _, maxVal, _, maxLoc = cv2.minMaxLoc(maskedProbMap)
-            keypoints.append(maxLoc + (probMap[maxLoc[1], maxLoc[0]],))
-        print("Keypoints - {} : {}".format(keypointsMapping[part], keypoints))
-        keypoints_with_id = []
-        for i in range(len(keypoints)):
-            keypoints_with_id.append(keypoints[i]+(keypoint_id,))
-            print("keypoints with id: ", keypoints_with_id)
-            keypoints_list = np.vstack([keypoints_list, keypoints[i]])
-            keypoint_id += 1
+        detect_keypoints = []
+        keypoints_list = np.zeros((0,3))
+        keypoint_id = 0
+        threshold = 0.1
 
-        detect_keypoints.append(keypoints_with_id)
-        print("detect_keypoints: ",detect_keypoints)
-    
-    # Clone해서 특징점 원형으로 그리기
-    frameClone = frame.copy()
+        for part in range(nPoints):
+            probMap = output[0, part, :, :]
+            probMap = cv2.resize(probMap, (frameWidth, frameHeight))
+            
+            #특징점 추출(Keypoints)-> 원래 함수에 있던 애
+            mapSmooth = cv2.GaussianBlur(probMap, (3,3), 0, 0)
+            mapMask = np.uint8(mapSmooth>threshold)
+            keypoints = []
+            contours, _ = cv2.findContours(mapMask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-    '''json파일로 저장하기 위해 pose_keypoints 정의'''
-    pose_keypoints = []
-    for i in range(nPoints):
-        if detect_keypoints[i] == []:
-            pose_keypoints.append(0)
-            pose_keypoints.append(0)
-            pose_keypoints.append(0)
+            #각 blobs의 max, min값 찾기
+            for cnt in contours:
+                blobMask = np.zeros(mapMask.shape)
+                blobMask = cv2.fillConvexPoly(blobMask, cnt, 1)
+                maskedProbMap = mapSmooth * blobMask
+                _, maxVal, _, maxLoc = cv2.minMaxLoc(maskedProbMap)
+                keypoints.append(maxLoc + (probMap[maxLoc[1], maxLoc[0]],))
+            print("Keypoints - {} : {}".format(keypointsMapping[part], keypoints))
+            keypoints_with_id = []
+            for i in range(len(keypoints)):
+                keypoints_with_id.append(keypoints[i]+(keypoint_id,))
+                # print("keypoints with id: ", keypoints_with_id)
+                keypoints_list = np.vstack([keypoints_list, keypoints[i]])
+                keypoint_id += 1
 
-        for j in range(len(detect_keypoints[i])):
-            pose_keypoints.append(detect_keypoints[i][j][0])
-            pose_keypoints.append(detect_keypoints[i][j][1])
-            pose_keypoints.append(float(detect_keypoints[i][j][2]))
-            cv2.circle(frameClone, detect_keypoints[i][j][0:2], 5, colors[i], -1, cv2.LINE_AA)
+            detect_keypoints.append(keypoints_with_id)
+            # print("detect_keypoints: ",detect_keypoints)
+        
+        # Clone해서 특징점 원형으로 그리기
+        frameClone = frame.copy()
+
+        '''json파일로 저장하기 위해 pose_keypoints 정의'''
+        pose_keypoints = []
+        for i in range(nPoints):
+            if detect_keypoints[i] == []:
+                pose_keypoints.append(0)
+                pose_keypoints.append(0)
+                pose_keypoints.append(0)
+
+            for j in range(len(detect_keypoints[i])):
+                pose_keypoints.append(detect_keypoints[i][j][0])
+                pose_keypoints.append(detect_keypoints[i][j][1])
+                pose_keypoints.append(float(detect_keypoints[i][j][2]))
+                cv2.circle(frameClone, detect_keypoints[i][j][0:2], 5, colors[i], -1, cv2.LINE_AA)
+        total_keypoints.append(pose_keypoints)
+        cv2.imshow("Detected Pose" , frameClone)
 
     '''keypoints값 json파일에 저장하기'''
-    json_data = {"1.mp4": [
-            {"pose_keypoints":pose_keypoints }
-            ]}
-    with open('C:/Users/ICT/Desktop/youda/IoT_Capstone/DeepLearning/keypoints.json','a+') as outfile:
+    json_data = {
+        f"{file}":[total_keypoints],
+        "label" : "violence"
+        }
+    with open(f'C:/Users/ICT/Desktop/youda/IoT_Capstone/DeepLearning/{file}.json','w') as outfile:
         json.dump(json_data, outfile)
-    cv2.imshow("Detected Pose" , frameClone)
 
-capture.release()  # 카메라 장치에서 받아온 메모리 해제
-out.release()
-cv2.destroyAllWindows()
+    num_path += 1
+ 
+        
+    capture.release()  # 카메라 장치에서 받아온 메모리 해제
+    # out.release()
+    cv2.destroyAllWindows()
