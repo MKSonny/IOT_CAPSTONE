@@ -118,7 +118,7 @@ while cv2.waitKey(1)<0: #어떤 키든 입력할 경우 중지
     # Clone해서 특징점 원형으로 그리기
     frameClone = frame.copy()
 
-    ''' 각 joint끼리 적절한지 판단하도록 함함'''
+    '''json파일로 저장하기 위해 pose_keypoints 정의'''
     pose_keypoints = []
     for i in range(nPoints):
         if detect_keypoints[i] == []:
@@ -129,18 +129,17 @@ while cv2.waitKey(1)<0: #어떤 키든 입력할 경우 중지
         for j in range(len(detect_keypoints[i])):
             pose_keypoints.append(detect_keypoints[i][j][0])
             pose_keypoints.append(detect_keypoints[i][j][1])
-            pose_keypoints.append(detect_keypoints[i][j][2])
-            pose_keypoints = np.array(pose_keypoints).astype(float)
+            pose_keypoints.append(float(detect_keypoints[i][j][2]))
             cv2.circle(frameClone, detect_keypoints[i][j][0:2], 5, colors[i], -1, cv2.LINE_AA)
 
     '''keypoints값 json파일에 저장하기'''
-    json_data = {"people": [
+    json_data = {"1.mp4": [
             {"pose_keypoints":pose_keypoints }
             ]}
-    with open('keypoints.json','a+') as outfile:
+    with open('C:/Users/ICT/Desktop/youda/IoT_Capstone/DeepLearning/keypoints.json','a+') as outfile:
         json.dump(json_data, outfile)
     cv2.imshow("Detected Pose" , frameClone)
 
-
 capture.release()  # 카메라 장치에서 받아온 메모리 해제
 out.release()
+cv2.destroyAllWindows()
