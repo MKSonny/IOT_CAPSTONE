@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:front_flutter/page/account.dart';
 import 'package:front_flutter/page/home.dart';
-import 'package:front_flutter/page/message.dart';
+import 'package:front_flutter/page/message_page.dart';
+
+import 'new_message_page.dart';
+import 'prorile_screen.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -11,13 +15,15 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final _authentication = FirebaseAuth.instance;
+  User? loggedUser;
   // 선택된 네비게이션바를 의미한다.
   int _selectedIndex = 0;
 
   // when we navigate we need to know the index
   // the user is tapping
-  void _navigateBottomBar(int index) {
 
+  void _navigateBottomBar(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -26,9 +32,11 @@ class _MainPageState extends State<MainPage> {
   // 선택한 아이템에 따라 다른 페이지를 보여준다.
  final List<Widget> _pages = [
     HomePage(), 
-    MessagePage(), 
-    AccountPage(),
+    new_message_list(), 
+    ProfileScreen(),
  ];
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +51,9 @@ class _MainPageState extends State<MainPage> {
         type: BottomNavigationBarType.fixed,
         // items: 선택 가능한 메뉴들
         items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Message'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Person'),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: '영상목록'),
+            BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: '메시지'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: '사용자'),
         ],
       ),
     );

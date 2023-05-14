@@ -49,6 +49,10 @@ dependencies:
   permission_handler: ^10.2.0
   external_path: ^1.0.3
   firebase_auth: ^4.2.2
+  flutter_chat_bubble: ^2.0.2
+  line_awesome_flutter: ^2.0.0
+  image_picker: ^0.8.7+1
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:

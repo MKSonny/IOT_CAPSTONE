@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:front_flutter/login/main_screen.dart';
 import 'package:front_flutter/page/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:front_flutter/page/main_page.dart';
+import 'package:front_flutter/page/message_list.dart';
 import 'firebase_options.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -56,8 +58,19 @@ Future<void> main() async {
     }
   }); 
 
-  runApp(const MaterialApp(
-    home: LoginSignupScreen(),
+  // runApp(MaterialApp(
+  //   home: MessageList(),
+  // ));
+  runApp(MaterialApp(
+    home: StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return MainPage();
+        }
+        return LoginSignupScreen();
+      },
+    ),
     // debugShowCheckedModeBanner: false,
   ));
 }
