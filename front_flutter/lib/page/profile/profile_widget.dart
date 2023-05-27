@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
+  final bool isEdit;
   final VoidCallback onClinked;
 
   const ProfileWidget({
     Key? key,
+    this.isEdit = false,
     required this.imagePath,
     required this.onClinked,
   }) : super(key: key);
@@ -37,27 +39,31 @@ class ProfileWidget extends StatelessWidget {
           width: 128,
           height: 128,
           child: InkWell(
-            onTap: onClinked,
+            // onTap: onClinked,
           ),
         ),
       ),
     );
   }
 
-  Widget buildEditIcon(Color color) => 
-  buildCircle(
-    color: Colors.white,
-    all: 3,
+Widget buildEditIcon(Color color) => 
+  GestureDetector(
+    onTap: onClinked,
     child: buildCircle(
-      color: color,
-      all: 8,
-      child: Icon(
-            Icons.edit,
-            color: Colors.white,
-            size: 20,
-          ),
+      color: Colors.white,
+      all: 3,
+      child: buildCircle(
+        color: color,
+        all: 8,
+        child: Icon( 
+          isEdit ? Icons.add_a_photo : Icons.edit,
+          color: Colors.white,
+          size: 20,
+        ),
+      ),
     ),
   );
+
 
   Widget buildCircle({
     required Widget child,

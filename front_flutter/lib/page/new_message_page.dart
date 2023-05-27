@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'message_page.dart';
 
 class new_message_list extends StatefulWidget {
-  const new_message_list({super.key});
+  const new_message_list({Key? key}) : super(key: key);
 
   @override
   State<new_message_list> createState() => _new_message_listState();
@@ -17,6 +17,7 @@ class _new_message_listState extends State<new_message_list> {
   final _authentication = FirebaseAuth.instance;
   User? loggedUser;
   String? userName;
+  String? userImage;
 
   @override
   void initState() {
@@ -27,79 +28,113 @@ class _new_message_listState extends State<new_message_list> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text("채팅 목록"),
+        backgroundColor: Colors.transparent,
+        title: Row(
+          children: [
+            SizedBox(width: 4),
+            Icon(Icons.chat_bubble_outline_rounded),
+            SizedBox(width: 10),
+            Text('채팅 목록'),
+          ],
+        ),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('chats')
-            .where('participants', arrayContains: loggedUser!.uid)
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          }
-          final chatDocs = snapshot.data!.docs;
-          print('chatDocs.length ' + chatDocs.length.toString());
-          return ListView.builder(
-  itemCount: chatDocs.length,
-  itemBuilder: (context, index) {
-    final chatDoc = chatDocs[index];
-    final chatId = chatDoc.id;
-    
-    return FutureBuilder(
-      future: FirebaseFirestore.instance.collection('chats').doc(chatId).collection('message').get(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        }
-        final formattedDateTime = chatDoc['formattedDateTime'];
-        final finalMessage = chatDoc['final_message'];
-        final finalMessageUsername = chatDoc['username'];
-        final chatData = chatDoc.data();
-        String dateRe = formattedDateTime.toString();
-        dateRe.replaceAll("\n", "");
-        print(dateRe);
-        return Card(
-          elevation: 5,
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-          child: ListTile(
-            leading: Icon(Icons.connected_tv),
-            title: Text(formattedDateTime),
-            subtitle: Row( children: [Text(finalMessageUsername), SizedBox(width: 20,),Text(finalMessage)],),
-            // trailing: Text('Yesterday'),
-            onTap: () {
-              Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return MessagePage(chatId, formattedDateTime);
-                    }));
-            },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/login_screen0.jpeg'),
+            fit: BoxFit.cover,
           ),
-        );
-      },
-    );
-  },
-);
-        },
+        ),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('chats')
+              .where('participants', arrayContains: loggedUser!.uid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            final chatDocs = snapshot.data!.docs;
+            return ListView.builder(
+              itemCount: chatDocs.length,
+              itemBuilder: (context, index) {
+                final chatDoc = chatDocs[index];
+                final chatId = chatDoc.id;
+                final formattedDateTime = chatDoc['formattedDateTime'];
+                final finalMessage = chatDoc['final_message'];
+                final finalMessageUsername = chatDoc['username'];
+                String dateRe = formattedDateTime.toString();
+                dateRe.replaceAll("\n", "");
+                return Card(
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: ListTile(
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 16), // Add padding
+                    leading: CircleAvatar(
+                      radius: 30, // Increase the radius
+                      backgroundColor: Colors.grey,
+                      child: userImage != null
+                          ? CircleAvatar(
+                              radius: 28, // Increase the radius
+                              backgroundImage: NetworkImage(userImage!),
+                            )
+                          : Icon(Icons.person, size: 30), // Increase the icon size
+                    ),
+                    title: Text(
+                      finalMessageUsername,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18, // Increase the font size
+                      ),
+                    ),
+                    subtitle: Text(
+                      finalMessage,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 16), // Increase the font size
+                    ),
+                    trailing: Text(
+                      formattedDateTime,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14, // Increase the font size
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return MessagePage(chatId, formattedDateTime);
+                      }));
+                    },
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
 
-  Future<String?> getCurrentUser() async {
+  Future<void> getCurrentUser() async {
     try {
       final user = _authentication.currentUser;
       if (user != null) {
         loggedUser = user;
-        final doc = await FirebaseFirestore.instance.collection('user').doc(loggedUser!.uid).get();
+        final doc =
+            await FirebaseFirestore.instance.collection('user').doc(loggedUser!.uid).get();
         if (doc.exists) {
           userName = doc['userName'];
+          userImage = doc['image'];
           print('User name: $userName');
-          return userName;
+          setState(() {}); // Trigger a rebuild to update the UI with user image
         }
       }
     } catch (e) {
       print(e);
-      return 'error';
     }
   }
 }

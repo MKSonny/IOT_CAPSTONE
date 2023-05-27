@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:front_flutter/page/account.dart';
 import 'package:front_flutter/page/home.dart';
 import 'package:front_flutter/page/message_page.dart';
+import 'package:front_flutter/page/profile/profile_screen2.dart';
+import 'package:front_flutter/page/profile/prorile_screen.dart';
 
 import 'new_message_page.dart';
-import 'prorile_screen.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -33,7 +34,7 @@ class _MainPageState extends State<MainPage> {
  final List<Widget> _pages = [
     HomePage(), 
     new_message_list(), 
-    ProfileScreen(),
+    ProfileScreen2(),
  ];
 
  
