@@ -31,6 +31,7 @@ class Messages extends StatelessWidget {
               chatDocs[index]['isTeacher'],
               chatDocs[index]['userId'].toString() == user!.uid,
               chatDocs[index]['userName'],
+              chatDocs[index]['looked']
               // chatDocs[index]['readed']
               );
           },

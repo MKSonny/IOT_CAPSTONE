@@ -118,7 +118,6 @@ class _ProfileScreen2State extends State<ProfileScreen2> {
       extendBodyBehindAppBar: true, // Extend the body behind the app bar
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Make the app bar transparent
-        // elevation: 0,
         title: Row(
           children: [
             SizedBox(width: 4),
@@ -127,6 +126,14 @@ class _ProfileScreen2State extends State<ProfileScreen2> {
             Text('프로필'),
           ],
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              _logout();
+            },
+          ),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -233,5 +240,19 @@ class _ProfileScreen2State extends State<ProfileScreen2> {
         ],
       ),
     );
+  }
+
+  void _logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      // You can navigate to the login screen or any other screen after logout.
+      // Example:
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => LoginScreen()),
+      // );
+    } catch (e) {
+      print('Failed to logout: $e');
+    }
   }
 }

@@ -87,19 +87,6 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
         const SizedBox(
           height: 10,
         ),
-        // const Divider(),
-        // Text(
-        //   // widget.dataSourceType.name.toUpperCase(),
-        //   // widget.url,
-        //   formattedDateTime,
-        //   style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        // ),
-        // ListTile(
-        //   title: Text(formattedDateTime),
-        //   trailing: IconButton(
-        //     icon: const Icon(Icons.download, color: Colors.black,),
-        //     onPressed: () => downloadFile(widget.url, formattedDateTime),),
-        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -136,8 +123,6 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
         const SizedBox(
           height: 10,
         ),
-
-        // const Divider(),
         AspectRatio(
           aspectRatio: 16 / 9,
           child: Chewie(controller: _chewieController),
@@ -156,10 +141,6 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
       path,
       onReceiveProgress: (received, total) {
         double progress = received / total;
-
-        // setState(() {
-        //   downloadProgress[index] = progress;
-        // });
       },
     );
 

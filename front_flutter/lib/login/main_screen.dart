@@ -474,7 +474,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           await FirebaseFirestore.instance
                               .collection('user')
                               .doc(newUser.user!.uid)
-                              .set({'userName': userName, 'email': userEmail});
+                              .set({'userName': userName, 'email': userEmail, 'image': 'https://firebasestorage.googleapis.com/v0/b/flutter-4798c.appspot.com/o/images%2Fd4b3003ac4b3fe56d6324029c0c36f77-sticker.png?alt=media&token=3bc12096-8c4c-41cd-8fcd-4ed534a1f184'});
 
                           if (newUser.user != null) {
                             // Navigator.push(

@@ -36,6 +36,7 @@ Future<void> main() async {
   );
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  // 안드로이드 알림 전송을 위한 토큰 정보 받기
   messaging.getToken().then((value) => print('FirebaseMessaging token is $value'));
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
@@ -62,6 +63,8 @@ Future<void> main() async {
   //   home: MessageList(),
   // ));
   runApp(MaterialApp(
+
+    debugShowCheckedModeBanner: false,
     home: StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {

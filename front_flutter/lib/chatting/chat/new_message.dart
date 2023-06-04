@@ -41,6 +41,7 @@ class _NewMessageState extends State<NewMessage> {
     FirebaseFirestore.instance.collection('chats').doc(chatRoomId).collection('message').add({
       'text': _userEnterMessage,
       'time': Timestamp.now(),
+      'looked': false,
       'userId': user.uid,      
       'userName': userData.data()!['userName'],
       'isTeacher': user.uid == '4jk4ZWeikBVOQvjzFkA7ByBRHPH3'

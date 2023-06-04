@@ -74,7 +74,6 @@ Widget build(BuildContext context) {
             SizedBox(width: 10),
             Text('감지된 영상 목록'),
           ],),
-          // title: const Text('감지된 영상 목록'),
         ),
         backgroundColor: Colors.transparent, // 배경 색상 투명으로 설정
         body: FutureBuilder<List<String>>(
@@ -127,63 +126,6 @@ Widget build(BuildContext context) {
     ),
   );
 }
-
-
-
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return RefreshIndicator(
-  //     onRefresh: _refresh,
-  //     child: Scaffold(
-  //       appBar: AppBar(
-  //         title: const Text('Download Files'),
-  //       ),
-  //       body: FutureBuilder<List<String>>(
-  //         future: futureFiles,
-  //         builder: (context, snapshot) {
-  //           if (snapshot.hasData) {
-  //             // final files = snapshot.data!.items;
-  //             final files = snapshot.data!;
-  //             return ListView.builder(
-  //               reverse: true,
-  //               itemCount: files.length,
-  //               itemBuilder: (context, index) {
-  //                 final file = files[index];
-  //                 print('file: ' + file);
-  //                 double? progress = downloadProgress[index];
-  //                 var downloadURL;
-  //                 // file.getDownloadURL().then((value) => downloadURL = value);
-    
-  //                 return VideoPlayerView(url: file, dataSourceType: DataSourceType.network);
-    
-  //                 // return ListTile(
-  //                 //   title: Text(file.name),
-  //                 //   subtitle: progress != null
-  //                 //   ? LinearProgressIndicator(
-  //                 //     value: progress,
-  //                 //     backgroundColor: Colors.black26,
-  //                 //   ) : null,
-  //                 //   trailing: IconButton(
-  //                 //     icon: const Icon(
-  //                 //       Icons.download,
-  //                 //       color: Colors.black,
-  //                 //     ),
-  //                 //     onPressed: () => downloadFile(index, file),
-  //                 //   ),
-  //                 // );
-  //               },
-  //             );
-  //           } else if (snapshot.hasError) {
-  //             return const Center(child: Text('Error'),);
-  //           } else {
-  //             return const Center(child: CircularProgressIndicator(),);
-  //           }
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Future downloadFile(int index, Reference ref) async {
     final url = await ref.getDownloadURL();
