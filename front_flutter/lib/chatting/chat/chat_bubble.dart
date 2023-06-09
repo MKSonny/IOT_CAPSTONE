@@ -3,16 +3,37 @@ import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatBubbles extends StatelessWidget {
-  const ChatBubbles(this.message, this.isTeacher, this.isMe, this.username, this.looked, {super.key});
+  const ChatBubbles(this.message, this.isTeacher, this.isMe, this.username, {super.key});
 
   final String username;
-  final bool looked;
   final bool isTeacher;
   final String message;
   final bool isMe;
 
+  Future<void> updateLookedField() async {
+      final QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('user')
+          .where('userName', isEqualTo: username)
+          .limit(1)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final DocumentSnapshot userDoc = snapshot.docs.first;
+        final String userId = userDoc.id;
+        await FirebaseFirestore.instance
+            .collection('user')
+            .doc(userId)
+            .update({'looked': true});
+      }
+    }
+
   @override
   Widget build(BuildContext context) {
+
+    if (!isMe) {
+      updateLookedField();
+    }
+
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('user')
@@ -94,9 +115,6 @@ class ChatBubbles extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Text(
-                              looked ? "": "1" 
-                            )
                           ],
                         ),
                       ],

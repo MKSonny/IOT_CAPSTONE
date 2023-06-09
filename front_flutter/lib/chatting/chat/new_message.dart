@@ -18,41 +18,41 @@ class _NewMessageState extends State<NewMessage> {
   var _userEnterMessage = '';
   final String chatRoomId;
   final String formattedDateTime;
-  // FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   
   _NewMessageState(this.chatRoomId, this.formattedDateTime);
 
   void _sendMessage() async {
-    FocusScope.of(context).unfocus();
-    final user = FirebaseAuth.instance.currentUser;
-    final userData = await FirebaseFirestore.instance.collection('user').doc(user!.uid).get();
+  FocusScope.of(context).unfocus();
+  final user = FirebaseAuth.instance.currentUser;
+  final userData = await FirebaseFirestore.instance.collection('user').doc(user!.uid).get();
 
-    FirebaseFirestore.instance.collection('chats').doc(chatRoomId).set({
-      'username': userData.data()!['userName'],
-      'final_message': _userEnterMessage,
-    });
+  FirebaseFirestore.instance.collection('chats').doc(chatRoomId).update({
+    'username': userData.data()!['userName'],
+    'final_message': _userEnterMessage,
+    'participants': FieldValue.arrayUnion([user.uid]),
+  });
 
-    FirebaseFirestore.instance.collection('chats').doc(chatRoomId).set({
-      'participants': FieldValue.arrayUnion([user.uid]),
-      'formattedDateTime': formattedDateTime
-    }, SetOptions(merge: true));
+  FirebaseFirestore.instance.collection('chats').doc(chatRoomId).set({
+    'looked': false,
+    'username': userData.data()!['userName'],
+    'final_message': _userEnterMessage,
+    'participants': FieldValue.arrayUnion([user.uid]),
+    'formattedDateTime': formattedDateTime,
+  }, SetOptions(merge: true));
 
-    FirebaseFirestore.instance.collection('chats').doc(chatRoomId).collection('message').add({
-      'text': _userEnterMessage,
-      'time': Timestamp.now(),
-      'looked': false,
-      'userId': user.uid,      
-      'userName': userData.data()!['userName'],
-      'isTeacher': user.uid == '4jk4ZWeikBVOQvjzFkA7ByBRHPH3'
-    });
-    // if (messaging == null) {
-    //   print('adfaffasfd null');
-    // } else {
-    //   sendNotification(userData.data()!['userName'], _userEnterMessage, 'cHWyi9Y-T8qZCXlv6cfREJ:APA91bFQrIbhxFnbaS8VbazY6MHDKKmaLq9Ho0JalHXq-DdXcjmVF-k63BguiIHGNgTCKhoaNKRMJs8lAb9BHxCjP8ZzmkjGU80i4m20fXPogl6o7cy_WHYsCxbWawlo5N1b8aHABE8c');
-    // }
-    _controller.clear();
-  }
+  FirebaseFirestore.instance.collection('chats').doc(chatRoomId).collection('message').add({
+    'text': _userEnterMessage,
+    'time': Timestamp.now(),
+    'userId': user.uid,
+    'userName': userData.data()!['userName'],
+    'isTeacher': user.uid == '4jk4ZWeikBVOQvjzFkA7ByBRHPH3'
+  });
+
+  _controller.clear();
+}
+
+
 
  // FCM 알림 전송 예제
 // Future<void> sendNotification(String title, String body, String? token) async {

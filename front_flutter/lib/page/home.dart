@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chewie/chewie.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,9 @@ import 'package:video_player/video_player.dart';
 import '../video_controller/video_player.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final User? loggedUser; // Add the loggedUser parameter
 
+  const HomePage(this.loggedUser, {Key? key}) : super(key: key);
   @override
   State<HomePage> createState() => _HomePageState();
 }

@@ -20,6 +20,7 @@ class MessagePage extends StatefulWidget {
   State<MessagePage> createState() => _MessagePageState(chatRoomId, formattedDateTime);
 }
 
+
 /*
   새로운 유저가 등록을 끝내고 채팅방으로 이동을 할 때 이 유저의
   이메일 주소를 출력해 볼 것이기 때문에 state가 매번 초기화될 때
@@ -28,6 +29,7 @@ class MessagePage extends StatefulWidget {
 
 class _MessagePageState extends State<MessagePage> {
   final _authentication = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
   User? loggedUser;
   late final String chatRoomId;
   late final String formattedDateTime;
@@ -38,8 +40,32 @@ class _MessagePageState extends State<MessagePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    updateLookedField();
     getCurrentUser();
+  }
 
+  Future<void> updateLookedField() async {
+    final user = _authentication.currentUser;
+    if (user != null) {
+      final userId = user.uid;
+
+      try {
+        final documentSnapshot = await _firestore.collection('chats').doc(chatRoomId).get();
+        if (documentSnapshot.exists) {
+          final chatRoomData = documentSnapshot.data() as Map<String, dynamic>?;
+          final participants = chatRoomData?['participants'] as List<dynamic>?;
+
+          if (participants != null && !participants.contains(userId)) {
+            await _firestore
+                .collection('chats')
+                .doc(chatRoomId)
+                .update({'looked': true});
+          }
+        }
+      } catch (e) {
+        print('Error updating looked field: $e');
+      }
+    }
   }
 
   void getCurrentUser() {
