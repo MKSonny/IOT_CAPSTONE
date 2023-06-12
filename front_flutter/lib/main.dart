@@ -1,16 +1,17 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:front_flutter/login/main_screen.dart';
 import 'package:front_flutter/page/home.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:front_flutter/page/main_page.dart';
+import 'package:front_flutter/page/message_list.dart';
 import 'firebase_options.dart';
 
-
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
- 
-
   print("Handling a background message: ${message.messageId}");
 }
 
@@ -35,6 +36,7 @@ Future<void> main() async {
   );
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  // 안드로이드 알림 전송을 위한 토큰 정보 받기
   messaging.getToken().then((value) => print('FirebaseMessaging token is $value'));
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
@@ -57,8 +59,21 @@ Future<void> main() async {
     }
   }); 
 
-  runApp(const MaterialApp(
-    home: HomePage(),
+  // runApp(MaterialApp(
+  //   home: MessageList(),
+  // ));
+  runApp(MaterialApp(
+
+    debugShowCheckedModeBanner: false,
+    home: StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return MainPage();
+        }
+        return LoginSignupScreen();
+      },
+    ),
     // debugShowCheckedModeBanner: false,
   ));
 }
